@@ -54,7 +54,7 @@ export default function CommissionForm({ handleTermsAgreed, termsAgreed, handleF
                     <div className="col-12 col-md-8">
                         <div className="card text-dark text-center container-lg rounded">
                             <div className="card-header">
-                                <h2>Commission Form</h2>
+                                <h3>Commission Form</h3>
                             </div>
                             <div className="card-body">
                                 <div className="row text-start">
