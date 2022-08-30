@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import Terms from '../components/Terms'
 import Button from '../components/Button'
-import CommissionForm from '../components/CommissionForm'
+import Loading from '../components/Loading'
+const CommissionForm = lazy(() => import('../components/CommissionForm'))
 import AnimatedPage from '../components/AnimatedPage'
 
 export default function Inquiries() {
@@ -69,11 +70,13 @@ export default function Inquiries() {
         <>
             {!formSubmitted ?
                 !termsAgreed ? displayTerms() : 
-                <CommissionForm 
-                    termsAgreed={termsAgreed}
-                    handleTermsAgreed={handleTermsAgreed} 
-                    handleFormSubmitted={handleFormSubmitted}
-                />
+                <Suspense fallback={<Loading/>}>
+                    <CommissionForm 
+                        termsAgreed={termsAgreed}
+                        handleTermsAgreed={handleTermsAgreed} 
+                        handleFormSubmitted={handleFormSubmitted}
+                    />
+                </Suspense>
                     :
                 <AnimatedPage>
                     <div className="container-lg px-lg-5 pb-lg-5">
