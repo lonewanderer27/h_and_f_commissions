@@ -2,6 +2,7 @@ import { useState } from 'react'
 import emailjs from 'emailjs-com'
 import AnimatedPage from './AnimatedPage'
 import Button from './Button'
+import Sending from './Sending'
 
 export default function CommissionForm({ handleTermsAgreed, termsAgreed, handleFormSubmitted }) {
     const [formData, setFormData] = useState(
@@ -14,6 +15,7 @@ export default function CommissionForm({ handleTermsAgreed, termsAgreed, handleF
             projectDeadline: ""
         }
     )
+    const [sending, setSending] = useState(false)
     console.log(`termsAgreed: ${termsAgreed}`)
     console.log(formData)
 
@@ -30,6 +32,7 @@ export default function CommissionForm({ handleTermsAgreed, termsAgreed, handleF
 
     function handleSubmit(event) {
         event.preventDefault()
+        setSending(prevSending => !prevSending)
         console.log(formData)
 
         emailjs.sendForm(
@@ -41,6 +44,7 @@ export default function CommissionForm({ handleTermsAgreed, termsAgreed, handleF
             .then((result) => {
                 console.log(result.text)
                 event.target.reset()
+                setSending(prevSending => !prevSending)
                 handleFormSubmitted()
             }, (error) => {
                 console.log(error.text)
@@ -121,6 +125,7 @@ export default function CommissionForm({ handleTermsAgreed, termsAgreed, handleF
                                                             <option value="Paymaya">Paymaya</option>
                                                         </select>
                                                     </div>
+                                                    {sending && <Sending />}
                                                 </div>
                                             </div>
                                         </div>
@@ -133,7 +138,7 @@ export default function CommissionForm({ handleTermsAgreed, termsAgreed, handleF
                 </div>
                 <Button
                     type="button"
-                    text="Go Back"
+                    text="Terms & Conditions"
                     onClick={handleTermsAgreed}
                 />
                 <Button
