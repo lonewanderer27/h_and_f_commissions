@@ -9,7 +9,7 @@ export default function Home() {
 
     const [contactVisible, setContactVisible] = useState(false)
 
-    function handleClick() {
+    function displayContact() {
         setContactVisible((previousContactVisible) => (!previousContactVisible))
     }
 
@@ -32,7 +32,9 @@ export default function Home() {
                 <AnimatePresence mode='wait'>
                     {contactVisible && 
                                 <div id="contactRow" key={contactVisible}>
-                                    <Contact onClick={handleClick}/>
+                                    {/* <Contact onClick={displayContact}/> */}
+                                    <Contact />
+                                    <Button text="Hide" onClick={displayContact} />
                                 </div>}
                                 
                     {!contactVisible && 
@@ -47,7 +49,7 @@ export default function Home() {
                                     />
                                     <Button 
                                         text="Contact"
-                                        onClick={handleClick}
+                                        onClick={displayContact}
                                     />
                                 </div>}
                 </AnimatePresence>

@@ -1,13 +1,19 @@
 import { useState, lazy, Suspense } from 'react'
 import Terms from '../components/Terms'
+import Contact from '../components/Contact'
 import Button from '../components/Button'
+import ButtonLink from '../components/ButtonLink'
 import Loading from '../components/Loading'
 const CommissionForm = lazy(() => import('../components/CommissionForm'))
 import AnimatedPage from '../components/AnimatedPage'
 
-export default function Inquiries() {
-    const [termsVisible, setTermsVisible] = useState(false)
-    const [termsAgreed, setTermsAgreed] = useState(false)
+export default function Inquiries({
+    termsVisible, 
+    setTermsVisible,
+    termsAgreed, 
+    setTermsAgreed
+}) {
+    
     const [formSubmitted, setFormSubmitted] = useState(false)
 
     function displayTerms(){
@@ -70,19 +76,27 @@ export default function Inquiries() {
         <>
             {!formSubmitted ?
                 !termsAgreed ? displayTerms() : 
-                <Suspense fallback={<Loading/>}>
-                    <CommissionForm 
-                        termsAgreed={termsAgreed}
-                        handleTermsAgreed={handleTermsAgreed} 
-                        handleFormSubmitted={handleFormSubmitted}
-                    />
-                </Suspense>
-                    :
-                <AnimatedPage>
-                    <div className="container-lg px-lg-5 pb-lg-5">
-                        <h3>Thank you for your commission request. We'll get in touch with you soon!</h3>
-                    </div>
-                </AnimatedPage>
+                    <Suspense fallback={<Loading/>}>
+                        <CommissionForm 
+                            termsAgreed={termsAgreed}
+                            handleTermsAgreed={handleTermsAgreed} 
+                            handleFormSubmitted={handleFormSubmitted}
+                        />
+                    </Suspense>
+                :
+                    <AnimatedPage>
+                        <div className="container-lg px-lg-5 pb-lg-5">
+                            <h3>Thank you for your commission request.<br/>We'll get in touch with you soon!</h3>
+                            <div className="m-5">
+                                <p>If have any concerns, you may contact us through the following:</p>
+                                <Contact />
+                            </div>
+                        </div>
+                        <ButtonLink 
+                            text="Go Back to Home" 
+                            to='/'
+                        />
+                    </AnimatedPage>
             }
         </>
     )

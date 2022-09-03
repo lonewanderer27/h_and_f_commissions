@@ -6,7 +6,7 @@ import Home from './routes/Home'
 import Work from './routes/Work'
 import Other from './routes/Other'
 import Inquiries from './routes/Inquiries'
-import {Routes, Route, Link, useLocation, useNavigate} from 'react-router-dom'
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
 import Loading from './components/Loading'
 const LazyProgramming = lazy(() => import('./routes/Programming'))
 const LazyArt = lazy(() => import('./routes/Art'))
@@ -19,6 +19,9 @@ function App() {
 
   const [currentPage, changeCurrentPage] = useState("home")
   console.log(currentPage)
+
+  const [termsVisible, setTermsVisible] = useState(false)
+  const [termsAgreed, setTermsAgreed] = useState(false)
 
   function handleClick() {
     console.log("Logo was clicked!")
@@ -53,7 +56,14 @@ function App() {
           }>
           </Route>
           <Route path='other-commisions' element={<Other/>}/>
-          <Route path='inquiries' element={<Inquiries />} />
+          <Route path='inquiries' element={
+            <Inquiries 
+              termsVisible={termsVisible}
+              setTermsVisible={setTermsVisible}
+              termsAgreed={termsAgreed}
+              setTermsAgreed={setTermsAgreed}
+            />
+          } />
         </Routes>
       </AnimatePresence>
     </div>
